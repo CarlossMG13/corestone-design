@@ -98,10 +98,23 @@ module.exports = {
         "aura-spin": {
           to: { transform: "translate(-50%, -50%) rotate(360deg)" },
         },
+        // Halo del monograma: solo pulsa de intensidad (opacity), sin desplazarse.
+        "cs-pulse": {
+          "0%, 100%": { opacity: "0.35" },
+          "50%": { opacity: "0.9" },
+        },
+        // Loader del monograma: un segmento recorre el anillo (stroke-dashoffset), sin fade.
+        "cs-orbit": {
+          from: { "stroke-dashoffset": "100" },
+          to: { "stroke-dashoffset": "0" },
+        },
       },
       animation: {
         // 8s linear infinite — respetar prefers-reduced-motion en CSS
         "aura-spin": "aura-spin 8s linear infinite",
+        // Monograma "C" — respetar prefers-reduced-motion vía motion-reduce:animate-none
+        "cs-pulse": "cs-pulse 3s ease-in-out infinite",
+        "cs-orbit": "cs-orbit 2.8s linear infinite",
       },
       transitionDuration: {
         DEFAULT: "200ms",

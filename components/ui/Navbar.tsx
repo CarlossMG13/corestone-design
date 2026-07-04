@@ -8,12 +8,16 @@ type NavbarProps = {
   className?: string;
 };
 
-/** Navegación — fondo stone-950, hairline inferior, blur al hacer scroll. Nunca aura. */
+/**
+ * Navegación — glassmorphism: fondo translúcido stone-950 + backdrop blur/saturate,
+ * hairline translúcido y un highlight superior sutil. Nunca aura.
+ * `supports-[backdrop-filter]` sube la opacidad como fallback donde no hay blur.
+ */
 export function Navbar({ brand = "Corestone", children, className }: NavbarProps) {
   return (
     <nav
       className={cn(
-        "sticky top-0 z-50 border-b border-stone-700 bg-surface/80 backdrop-blur-md",
+        "sticky top-0 z-50 border-b border-white/[0.08] bg-surface/85 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] supports-[backdrop-filter]:bg-surface/55",
         className,
       )}
     >

@@ -177,9 +177,10 @@ Nunca en: navegación, footer, botones secundarios, texto de cuerpo, o más de u
 - Fondo `stone-800`, borde 1px `stone-700`, `rounded-sm`, padding 10–12px.
 - Foco: borde `core-500`. Sin aura.
 
-### 5.6 Navegación
-- Fondo `stone-950` con blur sutil (`backdrop-filter`) al hacer scroll, borde inferior 1px `stone-700`.
-- Sin aura, sin glow. La navegación es infraestructura, no protagonista.
+### 5.6 Navegación — glassmorphism
+- Fondo translúcido `stone-950` (~55%) con `backdrop-filter: blur(20px) saturate(150%)`, borde inferior hairline translúcido (`rgba(255,255,255,0.08)`) y un highlight superior interno sutil.
+- Fallback: donde no hay `backdrop-filter`, subir la opacidad del fondo (~90%) para conservar la legibilidad.
+- Sticky al top. Sin aura, sin glow de marca. El glassmorphism (translucidez + blur) es el único "toque moderno" permitido aquí; la navegación sigue siendo infraestructura, no protagonista.
 
 ### 5.7 Badges
 - **Stack técnico:** fondo `stone-800`, texto `mono` 13px color `stone-300`, `rounded-sm`.

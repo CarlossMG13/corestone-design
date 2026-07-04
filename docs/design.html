@@ -216,11 +216,24 @@
     .aura-border::before, .card-featured::before { animation: none; }
   }
 
-  /* Nav sample */
+  /* Nav sample — glassmorphism. El wrapper aporta un fondo para que el blur sea visible. */
+  .nav-demo {
+    border-radius: var(--rounded-lg);
+    overflow: hidden;
+    background:
+      radial-gradient(120% 140% at 15% 0%, rgba(59, 107, 240, 0.28), transparent 55%),
+      radial-gradient(120% 140% at 85% 100%, rgba(139, 92, 246, 0.24), transparent 55%),
+      var(--surface-elevated);
+    padding-bottom: 40px;
+  }
   .nav-sample {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
-    border-radius: var(--rounded-lg); border: 1px solid var(--border);
+    padding: 16px 24px;
+    background: rgba(11, 11, 13, 0.55);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
   }
   .nav-sample .logo { font-weight: 600; letter-spacing: -0.02em; }
   .nav-sample .links { display: flex; gap: 28px; font-size: 0.875rem; color: var(--on-surface-muted); }
@@ -367,10 +380,12 @@
     <h3 class="sub">Input</h3>
     <div class="row"><input class="input" placeholder="you@company.com" /></div>
 
-    <h3 class="sub">Nav — no aura</h3>
-    <div class="nav-sample">
-      <div class="logo">Corestone</div>
-      <div class="links"><span>Services</span><span>Work</span><span>Contact</span></div>
+    <h3 class="sub">Nav — glassmorphism (translúcido + blur), no aura</h3>
+    <div class="nav-demo">
+      <div class="nav-sample">
+        <div class="logo">Corestone</div>
+        <div class="links"><span>Services</span><span>Work</span><span>Contact</span></div>
+      </div>
     </div>
 
     <h3 class="sub">Cards — hover lifts the border (no aura)</h3>

@@ -250,12 +250,24 @@ body {
 }
 
 /* ============================================================
-   Navegación — fondo stone-950, borde inferior hairline. Sin aura.
+   Navegación — glassmorphism (fondo translúcido + blur/saturate). Sin aura.
    ============================================================ */
 .nav {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  /* stone-950 @ 55% translúcido */
+  background: rgba(11, 11, 13, 0.55);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+/* Fallback: sin backdrop-filter, subir opacidad para conservar legibilidad */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav {
+    background: rgba(11, 11, 13, 0.9);
+  }
 }
 
 /* ============================================================

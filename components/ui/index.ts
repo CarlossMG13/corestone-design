@@ -2,6 +2,8 @@ export { AuraFrame } from "./AuraFrame";
 export { Badge } from "./Badge";
 export { Button } from "./Button";
 export { Card } from "./Card";
+export { CorestoneGlow } from "./CorestoneGlow";
+export { CorestoneLoader } from "./CorestoneLoader";
 export { FeatureCard } from "./FeatureCard";
 export { Hero } from "./Hero";
 export { Input } from "./Input";
