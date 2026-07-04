@@ -1,0 +1,15 @@
+{
+  "projectId": "ad492c28-8a0c-440e-93a0-7f85094b1600",
+  "shape": "package",
+  "pkg": "corestone",
+  "entry": "./dist/index.js",
+  "srcDir": "components",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": ".design-sync/.cache/tailwind-build.css",
+  "buildCmd": "npx tailwindcss -i ./app/globals.css -o ./.design-sync/.cache/tailwind-build.css --config tailwind.config.js",
+  "runtimeFontPrefixes": ["Inter", "JetBrains Mono"],
+  "readmeHeader": ".design-sync/conventions.md",
+  "overrides": {
+    "Navbar": { "cardMode": "column" }
+  }
+}

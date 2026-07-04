@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Corestone — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Stone — neutrals */
+    --stone-950: #0B0B0D;
+    --stone-900: #131316;
+    --stone-800: #1D1D21;
+    --stone-700: #2A2A2F;
+    --stone-500: #6B6B72;
+    --stone-300: #A8A8AE;
+    --stone-100: #E4E4E7;
+    --stone-50:  #F7F7F8;
+    /* Semantic surface & text */
+    --surface: var(--stone-950);
+    --surface-elevated: var(--stone-900);
+    --surface-hover: var(--stone-800);
+    --border: var(--stone-700);
+    --border-hover: var(--stone-500);
+    --on-surface: var(--stone-50);
+    --on-surface-secondary: var(--stone-100);
+    --on-surface-muted: var(--stone-300);
+    /* Core — single accent */
+    --core-600: #1E4FD6;
+    --core-500: #3B6BF0;
+    --core-400: #6E8FF5;
+    --core-glow: rgba(59, 107, 240, 0.4);
+    /* Copper */
+    --copper-500: #D97757;
+    /* Corestone Aura — fixed order */
+    --aura-blue:   #3B6BF0;
+    --aura-violet: #8B5CF6;
+    --aura-pink:   #D6478C;
+    --aura-amber:  #E0A526;
+    /* Semantic states */
+    --success: #3FB27F;
+    --warning: #E0A526;
+    --error:   #E5484D;
+    /* Typography */
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    /* Radius */
+    --rounded-sm: 6px;
+    --rounded-md: 10px;
+    --rounded-lg: 16px;
+    --rounded-xl: 24px;
+    /* Spacing (4px base) */
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+    --space-24: 96px; --space-32: 128px;
+    /* Motion */
+    --dur: 200ms;
+    --ease: ease-out;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--surface);
+    color: var(--on-surface);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: var(--space-16) var(--space-6);
+  }
+
+  .wrap { max-width: 940px; margin: 0 auto; }
+
+  /* --- Page chrome (neutral, not product UI) --- */
+  header.doc-head {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--space-8);
+    margin-bottom: var(--space-16);
+  }
+  header.doc-head .name {
+    font-size: 2.5rem; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 var(--space-3);
+  }
+  header.doc-head .name em { font-style: normal; color: var(--core-400); }
+  header.doc-head .desc { color: var(--on-surface-muted); font-size: 1.125rem; margin: 0 0 var(--space-2); max-width: 620px; }
+  header.doc-head .mirror { color: var(--stone-500); font-size: 0.8125rem; font-family: var(--font-mono); margin: 0; }
+
+  section.block { margin-bottom: var(--space-24); }
+  h2.section-title {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--on-surface-muted);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--space-3);
+    margin: 0 0 var(--space-8);
+  }
+  h3.sub { font-size: 1.25rem; font-weight: 500; margin: var(--space-12) 0 var(--space-4); }
+
+  /* --- Colors --- */
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-4); }
+  .swatch { border: 1px solid var(--border); border-radius: var(--rounded-md); overflow: hidden; }
+  .swatch .chip { height: 72px; display: flex; align-items: flex-end; padding: var(--space-2) var(--space-3); }
+  .swatch .chip span { font-size: 0.8125rem; }
+  .swatch .meta { padding: var(--space-3); background: var(--surface-elevated); }
+  .swatch .meta .tok { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--on-surface); }
+  .swatch .meta .hex { font-family: var(--font-mono); font-size: 0.75rem; color: var(--on-surface-muted); }
+
+  /* --- Typography specimens --- */
+  .spec { border-top: 1px solid var(--border); padding: var(--space-6) 0; display: grid; grid-template-columns: 160px 1fr; gap: var(--space-6); align-items: baseline; }
+  .spec:first-of-type { border-top: none; }
+  .spec .label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--on-surface-muted); }
+  .spec .label b { display: block; color: var(--on-surface); font-weight: 500; font-size: 0.8125rem; margin-bottom: 4px; }
+  .t-display { font-size: 4.5rem; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+  .t-h1 { font-size: 2.5rem; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+  .t-h2 { font-size: 1.75rem; font-weight: 600; line-height: 1.3; }
+  .t-h3 { font-size: 1.25rem; font-weight: 500; line-height: 1.4; }
+  .t-body-lg { font-size: 1.125rem; font-weight: 400; line-height: 1.6; }
+  .t-body { font-size: 1rem; font-weight: 400; line-height: 1.6; }
+  .t-caption { font-size: 0.8125rem; font-weight: 400; line-height: 1.4; }
+  .t-mono { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 400; line-height: 1.4; letter-spacing: 0.02em; }
+
+  /* --- Spacing --- */
+  .space-row { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-3); }
+  .space-row .bar { height: 16px; background: var(--core-500); border-radius: 3px; }
+  .space-row .lbl { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--on-surface-muted); }
+
+  /* --- Radius --- */
+  .radius-grid { display: flex; gap: var(--space-6); flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-item .box { width: 96px; height: 96px; background: var(--surface-elevated); border: 1px solid var(--border-hover); margin-bottom: var(--space-2); }
+  .radius-item .lbl { font-family: var(--font-mono); font-size: 0.75rem; color: var(--on-surface-muted); }
+
+  /* --- Elevation --- */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-4); }
+  .elev { border-radius: var(--rounded-lg); padding: var(--space-6); font-size: 0.875rem; color: var(--on-surface-muted); }
+  .elev .tok { font-family: var(--font-mono); color: var(--on-surface); display: block; margin-bottom: 4px; }
+  .elev-page { background: var(--surface); border: 1px solid var(--border); }
+  .elev-card { background: var(--surface-elevated); border: 1px solid var(--border); }
+  .elev-hover { background: var(--surface-hover); border: 1px solid var(--border-hover); }
+  .elev-glow { background: var(--core-600); color: var(--stone-50); box-shadow: 0 0 24px 0 var(--core-glow); }
+  .elev-glow .tok { color: var(--stone-50); }
+
+  /* --- Components --- */
+  .row { display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: center; margin-bottom: var(--space-8); }
+  .btn-primary {
+    display: inline-block; background: var(--core-600); color: var(--stone-50);
+    font-weight: 500; font-size: 1rem; padding: 14px 28px; border: none;
+    border-radius: var(--rounded-md); text-decoration: none; cursor: pointer;
+    transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  }
+  .btn-primary:hover, .btn-primary.is-hover { background: var(--core-500); box-shadow: 0 0 24px 0 var(--core-glow); }
+  .btn-secondary {
+    display: inline-block; background: transparent; color: var(--on-surface-secondary);
+    font-weight: 500; font-size: 1rem; padding: 13px 27px; cursor: pointer;
+    border: 1px solid var(--border); border-radius: var(--rounded-md); text-decoration: none;
+    transition: border-color var(--dur) var(--ease);
+  }
+  .btn-secondary:hover, .btn-secondary.is-hover { border-color: var(--border-hover); }
+  .input {
+    background: var(--surface-hover); color: var(--on-surface); border: 1px solid var(--border);
+    border-radius: var(--rounded-sm); padding: 10px 12px; font-family: var(--font-sans); font-size: 1rem;
+    min-width: 240px; outline: none; transition: border-color var(--dur) var(--ease);
+  }
+  .input:focus { border-color: var(--core-500); }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+  .card {
+    background: var(--surface-elevated); border: 1px solid var(--border);
+    border-radius: var(--rounded-lg); padding: 28px 24px;
+    transition: border-color var(--dur) var(--ease);
+  }
+  .card:hover, .card.is-hover { border-color: var(--border-hover); }
+  .card h4 { font-size: 1.0625rem; font-weight: 500; margin: 0 0 var(--space-2); }
+  .card p { font-size: 0.875rem; color: var(--on-surface-muted); line-height: 1.5; margin: 0; }
+
+  /* Featured card — aura on hover only (frame + solid-inner-layer technique) */
+  .card-featured { position: relative; overflow: hidden; padding: 2px; border: none; border-radius: var(--rounded-lg); background: var(--surface-elevated); }
+  .card-featured::before {
+    content: ""; position: absolute; z-index: 0; top: 50%; left: 50%;
+    width: 250%; height: 250%; transform: translate(-50%, -50%) rotate(0deg);
+    background: conic-gradient(var(--aura-blue), var(--aura-violet), var(--aura-pink), var(--aura-amber), var(--aura-blue));
+    opacity: 0; transition: opacity 250ms var(--ease); animation: aura-spin 8s linear infinite;
+  }
+  .card-featured:hover::before, .card-featured.is-hover::before { opacity: 1; }
+  .card-featured .card-inner {
+    position: relative; z-index: 1; background: var(--surface-elevated);
+    border: 1px solid var(--border); border-radius: 14px; padding: 26px 22px; height: 100%;
+  }
+  .card-featured:hover .card-inner, .card-featured.is-hover .card-inner { border-color: transparent; }
+
+  /* Hero — permanent rotating aura (frame + solid-inner-layer technique) */
+  .aura-border {
+    position: relative; border-radius: var(--rounded-xl); padding: 2px; overflow: hidden; background: var(--surface-elevated);
+  }
+  .aura-border::before {
+    content: ""; position: absolute; z-index: 0; top: 50%; left: 50%;
+    width: 250%; height: 250%; transform: translate(-50%, -50%) rotate(0deg);
+    background: conic-gradient(var(--aura-blue), var(--aura-violet), var(--aura-pink), var(--aura-amber), var(--aura-blue));
+    animation: aura-spin 8s linear infinite;
+  }
+  .hero {
+    position: relative; z-index: 1; text-align: center; padding: 72px 48px;
+    background: var(--surface-elevated); border-radius: 22px;
+  }
+  .hero h3 { font-size: 3.5rem; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 var(--space-4); }
+  .hero h3 span { color: var(--aura-violet); }
+  .hero p { color: var(--on-surface-muted); font-size: 1.125rem; max-width: 460px; margin: 0 auto var(--space-8); }
+
+  @keyframes aura-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .aura-border::before, .card-featured::before { animation: none; }
+  }
+
+  /* Nav sample */
+  .nav-sample {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
+    border-radius: var(--rounded-lg); border: 1px solid var(--border);
+  }
+  .nav-sample .logo { font-weight: 600; letter-spacing: -0.02em; }
+  .nav-sample .links { display: flex; gap: 28px; font-size: 0.875rem; color: var(--on-surface-muted); }
+
+  /* Badges */
+  .badge-stack {
+    font-family: var(--font-mono); font-size: 0.8125rem; color: var(--on-surface-muted);
+    background: var(--surface-hover); border-radius: var(--rounded-sm); padding: 7px 12px;
+  }
+  .badge-status {
+    font-family: var(--font-mono); font-size: 0.8125rem; color: var(--copper-500);
+    background: var(--surface-hover); border-radius: var(--rounded-sm); padding: 6px 10px;
+  }
+
+  /* Do / Don't */
+  .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+  .dodont ul { list-style: none; padding: 0; margin: 0; }
+  .dodont li { padding: var(--space-3) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--on-surface-secondary); }
+  .dodont .col-do h4 { color: var(--success); }
+  .dodont .col-dont h4 { color: var(--error); }
+  .dodont h4 { font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 var(--space-3); }
+  .dodont li::before { font-family: var(--font-mono); margin-right: var(--space-2); }
+  .col-do li::before { content: "✓"; color: var(--success); }
+  .col-dont li::before { content: "✗"; color: var(--error); }
+
+  .note { font-size: 0.8125rem; color: var(--stone-500); font-style: italic; margin-top: var(--space-4); }
+  @media (max-width: 720px) { .cards, .dodont { grid-template-columns: 1fr; } .spec { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="doc-head">
+    <p class="name">Core<em>stone</em> Design System</p>
+    <p class="desc">Dark-mode design system for a long-term technical software studio — solid stone neutrals, a single blue accent, and a constrained multicolor signature aura.</p>
+    <p class="mirror">Human-readable mirror of docs/design.md — same tokens, rendered live.</p>
+  </header>
+
+  <!-- COLORS -->
+  <section class="block">
+    <h2 class="section-title">Colors</h2>
+
+    <h3 class="sub">Stone — neutrals</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="chip" style="background:var(--stone-950)"><span style="color:var(--stone-50)">page bg</span></div><div class="meta"><div class="tok">stone-950</div><div class="hex">#0B0B0D</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--stone-900)"><span style="color:var(--stone-50)">elevated</span></div><div class="meta"><div class="tok">stone-900</div><div class="hex">#131316</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--stone-800)"><span style="color:var(--stone-50)">hover / input</span></div><div class="meta"><div class="tok">stone-800</div><div class="hex">#1D1D21</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--stone-700)"><span style="color:var(--stone-50)">border</span></div><div class="meta"><div class="tok">stone-700</div><div class="hex">#2A2A2F</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--stone-500)"><span style="color:var(--stone-950)">muted text</span></div><div class="meta"><div class="tok">stone-500</div><div class="hex">#6B6B72</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--stone-300)"><span style="color:var(--stone-950)">tertiary text</span></div><div class="meta"><div class="tok">stone-300</div><div class="hex">#A8A8AE</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--stone-100)"><span style="color:var(--stone-950)">secondary text</span></div><div class="meta"><div class="tok">stone-100</div><div class="hex">#E4E4E7</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--stone-50)"><span style="color:var(--stone-950)">primary text</span></div><div class="meta"><div class="tok">stone-50</div><div class="hex">#F7F7F8</div></div></div>
+    </div>
+
+    <h3 class="sub">Core — single UI accent</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="chip" style="background:var(--core-600)"><span style="color:var(--stone-50)">button fill</span></div><div class="meta"><div class="tok">core-600</div><div class="hex">#1E4FD6</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--core-500)"><span style="color:var(--stone-50)">hover</span></div><div class="meta"><div class="tok">core-500</div><div class="hex">#3B6BF0</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--core-400)"><span style="color:var(--stone-950)">accent text</span></div><div class="meta"><div class="tok">core-400</div><div class="hex">#6E8FF5</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--copper-500)"><span style="color:var(--stone-950)">status accent</span></div><div class="meta"><div class="tok">copper-500</div><div class="hex">#D97757</div></div></div>
+    </div>
+
+    <h3 class="sub">Corestone Aura — signature gradient (fixed order)</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="chip" style="background:var(--aura-blue)"><span style="color:var(--stone-50)">1</span></div><div class="meta"><div class="tok">aura-blue</div><div class="hex">#3B6BF0</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--aura-violet)"><span style="color:var(--stone-50)">2</span></div><div class="meta"><div class="tok">aura-violet</div><div class="hex">#8B5CF6</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--aura-pink)"><span style="color:var(--stone-50)">3</span></div><div class="meta"><div class="tok">aura-pink</div><div class="hex">#D6478C</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--aura-amber)"><span style="color:var(--stone-950)">4</span></div><div class="meta"><div class="tok">aura-amber</div><div class="hex">#E0A526</div></div></div>
+    </div>
+    <div style="height:16px;border-radius:var(--rounded-sm);margin-top:var(--space-4);background:conic-gradient(var(--aura-blue),var(--aura-violet),var(--aura-pink),var(--aura-amber),var(--aura-blue))"></div>
+    <p class="note">Non-negotiable: these four colors, in this order, always — only ever together, only inside the aura effect.</p>
+
+    <h3 class="sub">Semantic states</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="chip" style="background:var(--success)"><span style="color:var(--stone-950)">success</span></div><div class="meta"><div class="tok">success</div><div class="hex">#3FB27F</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--warning)"><span style="color:var(--stone-950)">warning</span></div><div class="meta"><div class="tok">warning</div><div class="hex">#E0A526</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--error)"><span style="color:var(--stone-50)">error</span></div><div class="meta"><div class="tok">error</div><div class="hex">#E5484D</div></div></div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section class="block">
+    <h2 class="section-title">Typography</h2>
+    <div class="spec"><div class="label"><b>display</b>Inter · 72 / 600<br/>lh 1.1 · -0.02em</div><div class="t-display">Corestone</div></div>
+    <div class="spec"><div class="label"><b>h1</b>Inter · 40 / 600<br/>lh 1.15 · -0.02em</div><div class="t-h1">Software that lasts</div></div>
+    <div class="spec"><div class="label"><b>h2</b>Inter · 28 / 600<br/>lh 1.3</div><div class="t-h2">We build, we ship, we stay</div></div>
+    <div class="spec"><div class="label"><b>h3</b>Inter · 20 / 500<br/>lh 1.4</div><div class="t-h3">A long-term technical partner</div></div>
+    <div class="spec"><div class="label"><b>body-lg</b>Inter · 18 / 400<br/>lh 1.6</div><div class="t-body-lg">We know what we do — there's no need to shout. The work speaks in how long it holds up.</div></div>
+    <div class="spec"><div class="label"><b>body</b>Inter · 16 / 400<br/>lh 1.6</div><div class="t-body">Corestone is a Mexico-based software studio. Stack: React/Next.js, Tailwind, Node.js, PostgreSQL, Supabase. We're a partner, not a vendor of the week.</div></div>
+    <div class="spec"><div class="label"><b>caption</b>Inter · 13 / 400<br/>lh 1.4</div><div class="t-caption">Metadata, labels, and secondary annotations.</div></div>
+    <div class="spec"><div class="label"><b>mono</b>JetBrains Mono · 13 / 400<br/>lh 1.4 · 0.02em</div><div class="t-mono">const stack = ["Next.js", "Supabase", "n8n"];</div></div>
+  </section>
+
+  <!-- SPACING -->
+  <section class="block">
+    <h2 class="section-title">Spacing — 4px base</h2>
+    <div class="space-row"><div class="bar" style="width:4px"></div><div class="lbl">space-1 · 4px</div></div>
+    <div class="space-row"><div class="bar" style="width:8px"></div><div class="lbl">space-2 · 8px</div></div>
+    <div class="space-row"><div class="bar" style="width:12px"></div><div class="lbl">space-3 · 12px</div></div>
+    <div class="space-row"><div class="bar" style="width:16px"></div><div class="lbl">space-4 · 16px</div></div>
+    <div class="space-row"><div class="bar" style="width:24px"></div><div class="lbl">space-6 · 24px</div></div>
+    <div class="space-row"><div class="bar" style="width:32px"></div><div class="lbl">space-8 · 32px</div></div>
+    <div class="space-row"><div class="bar" style="width:48px"></div><div class="lbl">space-12 · 48px</div></div>
+    <div class="space-row"><div class="bar" style="width:64px"></div><div class="lbl">space-16 · 64px</div></div>
+    <div class="space-row"><div class="bar" style="width:96px"></div><div class="lbl">space-24 · 96px</div></div>
+    <div class="space-row"><div class="bar" style="width:128px"></div><div class="lbl">space-32 · 128px</div></div>
+  </section>
+
+  <!-- RADIUS -->
+  <section class="block">
+    <h2 class="section-title">Radius — moderate, never full</h2>
+    <div class="radius-grid">
+      <div class="radius-item"><div class="box" style="border-radius:var(--rounded-sm)"></div><div class="lbl">sm · 6px<br/>inputs, badges</div></div>
+      <div class="radius-item"><div class="box" style="border-radius:var(--rounded-md)"></div><div class="lbl">md · 10px<br/>buttons</div></div>
+      <div class="radius-item"><div class="box" style="border-radius:var(--rounded-lg)"></div><div class="lbl">lg · 16px<br/>cards</div></div>
+      <div class="radius-item"><div class="box" style="border-radius:var(--rounded-xl)"></div><div class="lbl">xl · 24px<br/>hero, modals</div></div>
+    </div>
+  </section>
+
+  <!-- ELEVATION -->
+  <section class="block">
+    <h2 class="section-title">Elevation &amp; Depth — surface ramp + hairline borders</h2>
+    <div class="elev-grid">
+      <div class="elev elev-page"><span class="tok">stone-950</span>Page base. No shadow.</div>
+      <div class="elev elev-card"><span class="tok">stone-900 + 1px border</span>Elevated card / section.</div>
+      <div class="elev elev-hover"><span class="tok">stone-800 + brighter border</span>Hover state.</div>
+      <div class="elev elev-glow"><span class="tok">core-600 + blue glow</span>Primary button hover — the only functional glow.</div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section class="block">
+    <h2 class="section-title">Components</h2>
+
+    <h3 class="sub">Buttons — max one primary per view</h3>
+    <div class="row">
+      <button class="btn-primary">Start a project</button>
+      <button class="btn-primary is-hover">Start a project</button>
+      <button class="btn-secondary">See our work</button>
+      <button class="btn-secondary is-hover">See our work</button>
+    </div>
+    <p class="note">Left → default, right → hover. Primary hover adds a subtle blue glow; secondary only brightens its border.</p>
+
+    <h3 class="sub">Input</h3>
+    <div class="row"><input class="input" placeholder="you@company.com" /></div>
+
+    <h3 class="sub">Nav — no aura</h3>
+    <div class="nav-sample">
+      <div class="logo">Corestone</div>
+      <div class="links"><span>Services</span><span>Work</span><span>Contact</span></div>
+    </div>
+
+    <h3 class="sub">Cards — hover lifts the border (no aura)</h3>
+    <div class="cards">
+      <div class="card"><h4>Web platforms</h4><p>React / Next.js apps built to run for years, not demos.</p></div>
+      <div class="card is-hover"><h4>Mobile</h4><p>React Native + Expo. One codebase, shipped to both stores.</p></div>
+      <div class="card"><h4>Automation</h4><p>Claude + n8n workflows that quietly remove manual work.</p></div>
+    </div>
+
+    <h3 class="sub">Featured card — aura on hover only (one per section)</h3>
+    <div class="cards">
+      <div class="card-featured is-hover"><div class="card-inner"><h4>Long-term partner</h4><p>Hover state shown. At rest this is a plain card — the aura only appears on hover.</p></div></div>
+      <div class="card"><h4>At rest</h4><p>For contrast: a standard card with no aura.</p></div>
+      <div class="card"><h4>At rest</h4><p>Only one featured card carries the aura per section.</p></div>
+    </div>
+
+    <h3 class="sub">Hero — permanent rotating aura (one per view)</h3>
+    <div class="aura-border">
+      <div class="hero">
+        <h3>Software that <span>lasts</span>,<br/>not just ships fast.</h3>
+        <p>We build, we deliver, and we stay. A technical partner for the long run.</p>
+        <button class="btn-primary">Start a project</button>
+      </div>
+    </div>
+    <p class="note">The hero is the primary of two permitted aura locations. Never more than one active aura per view.</p>
+
+    <h3 class="sub">Stack &amp; status badges</h3>
+    <div class="row">
+      <span class="badge-stack">Next.js</span>
+      <span class="badge-stack">Supabase</span>
+      <span class="badge-stack">PostgreSQL</span>
+      <span class="badge-stack">n8n</span>
+      <span class="badge-status">● In production</span>
+    </div>
+  </section>
+
+  <!-- DO / DON'T -->
+  <section class="block">
+    <h2 class="section-title">Do's &amp; Don'ts</h2>
+    <div class="dodont">
+      <div class="col-do">
+        <h4>Do</h4>
+        <ul>
+          <li>Keep the aura to its four colors in fixed order (blue → violet → pink → amber).</li>
+          <li>Limit each view to one active aura and one primary button.</li>
+          <li>Build the aura with the frame + solid-inner-layer technique; respect reduced-motion.</li>
+          <li>Use core blue as the only interactive accent; reserve copper for status badges.</li>
+          <li>Express depth through the stone ramp and 1px borders — keep surfaces matte.</li>
+          <li>Use JetBrains Mono only for stack badges and code.</li>
+        </ul>
+      </div>
+      <div class="col-dont">
+        <h4>Don't</h4>
+        <ul>
+          <li>Put the aura on nav, footer, secondary buttons, inputs, or body text.</li>
+          <li>Run two auras — or leave the featured card's aura on at rest.</li>
+          <li>Use radius-full on cards/containers, or push type weight past 600.</li>
+          <li>Scatter the aura colors as a general palette or reorder the stops.</li>
+          <li>Use the mask-composite / @property border-clip approach — it fails in some engines.</li>
+          <li>Use pure black (#000) for surfaces; the base is stone-950.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

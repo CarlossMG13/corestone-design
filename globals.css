@@ -1,0 +1,279 @@
+/* Corestone Design System — tokens + componentes CSS.
+   Fuente de verdad: docs/design.md (+ docs/design.html como espejo humano).
+   Usar junto con tailwind.config.js. Reglas de uso del aura: docs/design.md §Components. */
+
+:root {
+  /* Stone — neutros */
+  --stone-950: #0b0b0d;
+  --stone-900: #131316;
+  --stone-800: #1d1d21;
+  --stone-700: #2a2a2f;
+  --stone-500: #6b6b72;
+  --stone-300: #a8a8ae;
+  --stone-100: #e4e4e7;
+  --stone-50: #f7f7f8;
+
+  /* Core — acento único de UI */
+  --core-600: #1e4fd6;
+  --core-500: #3b6bf0;
+  --core-400: #6e8ff5;
+  --core-glow: rgba(59, 107, 240, 0.4);
+
+  /* Copper — acento secundario, uso mínimo */
+  --copper-500: #d97757;
+
+  /* Corestone Aura — gradiente de firma (orden fijo, no negociable) */
+  --aura-blue: #3b6bf0;
+  --aura-violet: #8b5cf6;
+  --aura-pink: #d6478c;
+  --aura-amber: #e0a526;
+
+  /* Semánticos (nombres canónicos de docs/design.md) */
+  --success: #3fb27f;
+  --warning: #e0a526;
+  --error: #e5484d;
+
+  /* Alias de superficie */
+  --surface: var(--stone-950);
+  --surface-elevated: var(--stone-900);
+  --surface-hover: var(--stone-800);
+  --border: var(--stone-700);
+  --border-hover: var(--stone-500);
+
+  /* Alias de texto */
+  --on-surface: var(--stone-50);
+  --on-surface-secondary: var(--stone-100);
+  --on-surface-muted: var(--stone-300);
+
+  /* Tipografía */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Forma (grupo `rounded` — canónico en docs/design.md) */
+  --rounded-sm: 6px;
+  --rounded-md: 10px;
+  --rounded-lg: 16px;
+  --rounded-xl: 24px;
+
+  /* Espaciado — base 4px */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Movimiento */
+  --dur-default: 200ms;
+  --ease-default: ease-out;
+}
+
+body {
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   Botones — máximo un botón primario visible por vista.
+   ============================================================ */
+.btn-primary {
+  background: var(--core-600);
+  color: var(--stone-50);
+  font-weight: 500;
+  border: none;
+  border-radius: var(--rounded-md);
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: background var(--dur-default) var(--ease-default),
+    box-shadow var(--dur-default) var(--ease-default);
+}
+.btn-primary:hover {
+  background: var(--core-500);
+  /* Única aparición de glow fuera del hero */
+  box-shadow: 0 0 24px 0 var(--core-glow);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--on-surface-secondary);
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: var(--rounded-md);
+  padding: 13px 27px;
+  cursor: pointer;
+  transition: border-color var(--dur-default) var(--ease-default);
+}
+.btn-secondary:hover {
+  border-color: var(--border-hover);
+}
+
+/* ============================================================
+   Input
+   ============================================================ */
+.input {
+  background: var(--surface-hover);
+  color: var(--on-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--rounded-sm);
+  padding: 10px 12px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color var(--dur-default) var(--ease-default);
+}
+.input:focus {
+  border-color: var(--core-500);
+}
+
+/* ============================================================
+   Card — sin aura (salvo el feature card designado).
+   ============================================================ */
+.card {
+  background: var(--surface-elevated);
+  color: var(--on-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--rounded-lg);
+  padding: 28px 24px;
+  transition: border-color var(--dur-default) var(--ease-default);
+}
+.card:hover {
+  border-color: var(--border-hover);
+}
+
+/* ============================================================
+   Corestone Aura — clase reutilizable del hero.
+   Regla: máximo un elemento con aura activo por vista.
+   Técnica validada: marco (padding + overflow:hidden) con degradado cónico
+   sobredimensionado rotando detrás + capa interior sólida que tapa todo
+   menos el borde. NO usar mask-composite/@property (falla en algunos motores).
+   ============================================================ */
+.aura-border {
+  position: relative;
+  border-radius: var(--rounded-xl);
+  padding: 2px;
+  overflow: hidden;
+  background: var(--surface-elevated);
+}
+.aura-border::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  background: conic-gradient(
+    var(--aura-blue),
+    var(--aura-violet),
+    var(--aura-pink),
+    var(--aura-amber),
+    var(--aura-blue)
+  );
+  animation: aura-spin 8s linear infinite;
+}
+.hero {
+  position: relative;
+  z-index: 1;
+  background: var(--surface-elevated);
+  border-radius: 22px; /* xl (24) menos los 2px del marco */
+  padding: 72px 48px;
+}
+
+/* ============================================================
+   Feature card destacada — aura SOLO en hover, nunca en reposo.
+   Segundo (y único otro) lugar permitido para el aura. Misma técnica.
+   ============================================================ */
+.card-featured {
+  position: relative;
+  overflow: hidden;
+  padding: 2px;
+  border: none;
+  border-radius: var(--rounded-lg);
+  background: var(--surface-elevated);
+}
+.card-featured::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  background: conic-gradient(
+    var(--aura-blue),
+    var(--aura-violet),
+    var(--aura-pink),
+    var(--aura-amber),
+    var(--aura-blue)
+  );
+  opacity: 0;
+  transition: opacity 250ms var(--ease-default);
+  animation: aura-spin 8s linear infinite;
+}
+.card-featured:hover::before {
+  opacity: 1;
+}
+.card-featured .card-inner {
+  position: relative;
+  z-index: 1;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: 14px; /* lg (16) menos los 2px del marco */
+  padding: 26px 22px;
+  height: 100%;
+}
+.card-featured:hover .card-inner {
+  border-color: transparent;
+}
+
+@keyframes aura-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Accesibilidad: sin rotación, degradado estático */
+@media (prefers-reduced-motion: reduce) {
+  .aura-border::before,
+  .card-featured::before {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Navegación — fondo stone-950, borde inferior hairline. Sin aura.
+   ============================================================ */
+.nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+/* ============================================================
+   Badges
+   ============================================================ */
+.badge-stack {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--on-surface-muted);
+  background: var(--surface-hover);
+  border-radius: var(--rounded-sm);
+  padding: 7px 12px;
+}
+.badge-status {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--copper-500);
+  background: var(--surface-hover);
+  border-radius: var(--rounded-sm);
+  padding: 6px 10px;
+}
