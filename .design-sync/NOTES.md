@@ -1,11 +1,18 @@
 # design-sync notes — Corestone
 
-- **Not a git repo.** This directory has no `.git` — the skill's "commit the durable set" steps don't apply. Files are just written to disk.
+- **Now a git repo** (initialized/adopted after this note was first written) — the durable set (`config.json`, `NOTES.md`, `conventions.md`, `previews/`) should be committed going forward, as the base skill describes.
 - **No library build.** `package.json` has no `main`/`module`/`exports`/`build` script — this is the Next.js app itself, components live at `components/ui/*.tsx`. `cfg.entry` is set to a deliberately nonexistent `./dist/index.js` purely so the converter's PKG_DIR walk-up lands on the repo root's `package.json` (name `corestone`); the missing path then makes it fall through to synth-entry mode (ts-morph scans `components/` directly for exported PascalCase components).
 - **`cfg.srcDir: "components"` override is required.** Without it, the default src-root search order (`src` → `lib` → `components`) matches `lib/` first (it only holds `lib/cn.ts`, a `cn()` classnames helper, not components) and would scan the wrong directory.
 - **`cssEntry` is a generated file, not a repo source file.** Components use raw Tailwind utility classes (not the CSS custom properties in the root `globals.css`, which is a legacy/reference mirror of `docs/design.md` — the actual stylesheet consumed by the app is `app/globals.css`, just `@tailwind` directives + `@apply bg-surface font-sans text-on-surface antialiased`). Real utility CSS only exists after Tailwind's JIT compiles it, so `cfg.buildCmd` runs the Tailwind CLI into `.design-sync/.cache/tailwind-build.css`, which `cssEntry` points at. **Re-run `cfg.buildCmd` before every rebuild** — component-class changes only show up in the previews after this regenerates.
 - **Fonts (Inter, JetBrains Mono) load via a Google Fonts `<link>` tag in `app/layout.tsx`**, not `@font-face`/self-hosted files. Set via `cfg.runtimeFontPrefixes` to suppress `[FONT_MISSING]` — previews render in the fallback stack unless the design agent's own environment also loads the same Google Fonts URL.
 - Root `globals.css` (not `app/globals.css`) is dead/reference-only — it's a hand-authored CSS mirror of `docs/design.md`'s tokens and hasn't been wired into the app since the Tailwind migration. Don't confuse the two when debugging style issues.
+
+## 2026-07-04 re-sync check — no local changes, conventions.md drift found
+- Repo was clean (nothing changed since the prior sync commit `bafdf4b`); ran `resync.mjs` against the project's fetched `_ds_sync.json` anchor — all 10 components verified `unchanged`, `upload.any: false`. Nothing uploaded (project already matched).
+- Validated `.design-sync/conventions.md`'s class claims against the fresh `tailwind-build.css` + component source. Two named classes don't verify as literal utilities — they exist only as compound/state variants:
+  - `border-hover` (Borders row) isn't a class; the real usage is `hover:border-stone-500` (`Button.tsx`, `Card.tsx`).
+  - `text-core-500` (Accent row) doesn't appear anywhere in `components/`; the actual focus/accent classes are `focus-visible:ring-core-500` (Button) and `focus:border-core-500` (Input) — there's no plain-text accent-colored link usage in this repo yet.
+  - Fixed (user approved): reworded those two table entries to the real compound class names above.
 
 ## Re-sync risks
 - If the repo ever gains a real component-library build (dist + package.json exports), `cfg.entry`/`cfg.srcDir` should be revisited — the synth-entry path is a "last resort" per the skill, weaker `.d.ts` contracts than a real build.

@@ -11,9 +11,9 @@ Never invent class names — compose from this system's actual scale (defined in
 | Purpose | Classes |
 |---|---|
 | Surfaces | `bg-surface`, `bg-surface-elevated`, `bg-surface-hover` |
-| Borders | `border-stone-700` (default), `border-stone-500`/`border-hover` (hover state) |
+| Borders | `border-stone-700` (default), `hover:border-stone-500` (hover state) |
 | Text | `text-on-surface` (primary), `text-on-surface-secondary`, `text-on-surface-muted` |
-| Accent (single UI accent — don't introduce a second) | `bg-core-600`/`hover:bg-core-500` (primary button fill), `text-core-500`/`border-core-500` (focus/links) |
+| Accent (single UI accent — don't introduce a second) | `bg-core-600`/`hover:bg-core-500` (primary button fill), `focus-visible:ring-core-500`/`focus:border-core-500` (focus rings on Button/Input) |
 | Secondary accent (minimal use only) | `text-copper-500` (status badges only) |
 | Type scale | `text-display`, `text-h1`, `text-h2`, `text-h3`, `text-body-lg`, `text-body`, `text-caption`, `text-mono` (mono pairs with `font-mono`, used for eyebrows/badges) |
 | Radius | `rounded-sm` (6px), `rounded-md` (10px), `rounded-lg` (16px), `rounded-xl` (24px) |
