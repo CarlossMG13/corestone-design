@@ -1,10 +1,11 @@
 {
-  "projectId": "ad492c28-8a0c-440e-93a0-7f85094b1600",
+  "projectId": "abbe9d67-20f1-47aa-88dc-1173f6d959a3",
   "shape": "package",
   "pkg": "corestone",
   "entry": "./dist/index.js",
   "srcDir": "components",
   "tsconfig": "tsconfig.json",
+  "docsDir": "docs/components",
   "cssEntry": ".design-sync/.cache/tailwind-build.css",
   "buildCmd": "npx tailwindcss -i ./app/globals.css -o ./.design-sync/.cache/tailwind-build.css --config tailwind.config.js",
   "runtimeFontPrefixes": ["Inter", "JetBrains Mono"],
